@@ -17,8 +17,16 @@ loans.each do |loan|
   puts loan
 end
 
+states = [
+  Domain::Loan::State::Draft,
+  Domain::Loan::State::Submitted,
+  Domain::Loan::State::Approved,
+  Domain::Loan::State::Rejected,
+]
+
 last_loan = loans.sample
 last_loan.notes = random_note
+last_loan.state = states.filter {|s| s != last_loan.state }.sample
 
 client.update_loan(last_loan)
 puts "Updated loan ##{last_loan.id}"

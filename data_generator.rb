@@ -59,6 +59,21 @@ module DataGenerator
       )
     end
 
+    states = [
+      Domain::Loan::State::Draft,
+      Domain::Loan::State::Draft,
+      Domain::Loan::State::Draft,
+      Domain::Loan::State::Draft,
+      Domain::Loan::State::Submitted,
+      Domain::Loan::State::Submitted,
+      Domain::Loan::State::Submitted,
+      Domain::Loan::State::Submitted,
+      Domain::Loan::State::Approved,
+      Domain::Loan::State::Approved,
+      Domain::Loan::State::Approved,
+      Domain::Loan::State::Rejected
+    ]
+
     loans = {}
 
     [
@@ -134,84 +149,6 @@ module DataGenerator
         state: "Texas",
         zip: "77234"
       },
-      {
-        street: "6530 Beilfuss Center",
-        city: "New York City",
-        state: "New York",
-        zip: "10045"
-      },
-      {
-        street: "07843 Springview Way",
-        city: "Arlington",
-        state: "Virginia",
-        zip: "22212"
-      },
-      {
-        street: "4623 Fuller Park",
-        city: "Stamford",
-        state: "Connecticut",
-        zip: "06912"
-      },
-      {
-        street: "5707 Chinook Plaza",
-        city: "Fairfield",
-        state: "Connecticut",
-        zip: "06825"
-      },
-      {
-        street: "2612 Hoard Circle",
-        city: "Washington",
-        state: "District of Columbia",
-        zip: "20503"
-      },
-      {
-        street: "6164 Troy Park",
-        city: "Maple Plain",
-        state: "Minnesota",
-        zip: "55579"
-      },
-      {
-        street: "9789 Fieldstone Junction",
-        city: "Virginia Beach",
-        state: "Virginia",
-        zip: "23459"
-      },
-      {
-        street: "55146 Homewood Alley",
-        city: "Denver",
-        state: "Colorado",
-        zip: "80209"
-      },
-      {
-        street: "2363 Mayer Terrace",
-        city: "Houston",
-        state: "Texas",
-        zip: "77276"
-      },
-      {
-        street: "12 Portage Terrace",
-        city: "Grand Forks",
-        state: "North Dakota",
-        zip: "58207"
-      },
-      {
-        street: "5 Ridge Oak Center",
-        city: "Dallas",
-        state: "Texas",
-        zip: "75246"
-      },
-      {
-        street: "961 Gulseth Hill",
-        city: "Harrisburg",
-        state: "Pennsylvania",
-        zip: "17140"
-      },
-      {
-        street: "8630 Derek Plaza",
-        city: "Katy",
-        state: "Texas",
-        zip: "77493"
-      }
     ].each.with_index do |address, id|
       time = random_time
 
@@ -220,22 +157,7 @@ module DataGenerator
         notes: "",
         user: lenders.sample,
         address: Domain::Address.new(address),
-        state: [
-          Domain::Loan::State::Draft,
-          Domain::Loan::State::Draft,
-          Domain::Loan::State::Draft,
-          Domain::Loan::State::Draft,
-          Domain::Loan::State::Draft,
-          Domain::Loan::State::Submitted,
-          Domain::Loan::State::Submitted,
-          Domain::Loan::State::Submitted,
-          Domain::Loan::State::Submitted,
-          Domain::Loan::State::Submitted,
-          Domain::Loan::State::Approved,
-          Domain::Loan::State::Approved,
-          Domain::Loan::State::Approved,
-          Domain::Loan::State::Rejected,
-        ].sample,
+        state: states.shift,
         created_at: time,
         updated_at: time,
       )
