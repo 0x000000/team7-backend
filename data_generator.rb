@@ -55,7 +55,7 @@ module DataGenerator
       Domain::User.new(
         id: idx,
         name: name,
-        avatar_url: "assets/avatar_#{idx}.jpg",
+        avatar_url: "../assets/avatar_#{idx}.jpg",
       )
     end
 
