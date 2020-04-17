@@ -9,7 +9,7 @@ def random_note
   ('a'..'z').to_a.shuffle[0,10].join
 end
 
-client = Domain::Api::Private::LoansService::Stub.new('localhost:10369', :this_channel_is_insecure)
+client = Domain::Api::Private::LoansService::Stub.new('45.79.77.254:10369', :this_channel_is_insecure)
 loans = client.load_all(Google::Protobuf::Empty.new).loans
 
 puts "Loaded loans:"
