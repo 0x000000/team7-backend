@@ -16,6 +16,7 @@ require 'domain-ruby'
 user = Domain::Api::WebClient.new(id: Time.now.to_i)
 client = Domain::Api::Public::MultiplayerService::Stub.new('localhost:10369', :this_channel_is_insecure)
 
-client.listen_to_action_updates(user).each do |action|
-  puts action
+client.listen_to_client_updates(user).each do |client_update|
+  puts client_update
 end
+

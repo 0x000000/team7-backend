@@ -1,45 +1,29 @@
-class LoansService < Domain::Api::Private::LoansService::Service
-  attr_reader :loans, :updates
+require_relative '../helpers/data_generator'
+require_relative 'broadcast_service'
 
-  def initialize(loans)
-    @loans = loans
-    @updates = {}
+class LoansService < Domain::Api::Private::LoansService::Service
+  include BroadcastService
+
+  attr_reader :loans, :updates, :live_clients
+
+  def initialize
+    @loans = DataGenerator.generate
+    @updates = Concurrent::Map.new
+    @live_clients = Concurrent::Map.new
   end
 
   def load_all(_, _call)
-    puts "LoansService#load_all"
-
-    Domain::Api::Private::AllLoansResponse.new(loans: loans.values)
+    loans.values
   end
 
-  def update_loan(updated_loan, _call)
-    puts "LoansService#update_loan"
-
+  def update(updated_loan, _call)
     updated_loan.updated_at = DataGenerator.current_time
     loans[updated_loan.id] = updated_loan
 
-    updates.values.each do |client_queue| #update loan for each client queue
-      client_queue.push(updated_loan)
-    end
-
-    Google::Protobuf::Empty.new
+    update_queue(updated_loan, updates, live_clients)
   end
 
-  def listen_to_loan_updates(client, _call)
-    puts "LoansService#listen_to_loan_updates, #{client.id}"
-
-    updates[client.id] = []
-
-    Enumerator.new do |enum|
-      while true
-        updated_loan = updates[client.id].pop
-        if updated_loan
-          enum.yield(updated_loan)
-          puts "Updated loan #{updated_loan.id}, for client #{client.id}"
-        end
-
-        sleep 0.5
-      end
-    end
+  def listen_to_updates(client, _call)
+    broadcast_updates(client, updates, live_clients)
   end
 end

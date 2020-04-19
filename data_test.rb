@@ -4,6 +4,6 @@ require 'bundler/setup'
 require 'grpc'
 
 require 'domain-ruby'
-require './data_generator'
+require './helpers/data_generator'
 
 p DataGenerator.generate

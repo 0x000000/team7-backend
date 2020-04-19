@@ -2,16 +2,7 @@ require 'time'
 
 module DataGenerator
   def self.current_time
-    now = DateTime.now.new_offset(0)
-
-    Domain::Types::DateTimeUTC.new(
-      year: now.year,
-      month: now.month,
-      day: now.day,
-      hour: now.hour,
-      minute: now.minute,
-      second: now.second,
-    )
+    DateTime.now.new_offset(0).to_time.to_i
   end
 
   def self.random_time
@@ -22,15 +13,14 @@ module DataGenerator
 
     year = [2019, 2019, 2020, 2020, 2020].sample
 
-    Domain::Types::DateTimeUTC.new(
-      year: year,
-      month: months[year].sample,
-      day: (1..29).to_a.sample,
-      hour: (0..23).to_a.sample,
-      minute: (0..59).to_a.sample,
-      second: (0..59).to_a.sample,
-    )
-
+    DateTime.new(
+      year,
+      months[year].sample,
+      (1..29).to_a.sample,
+      (0..23).to_a.sample,
+      (0..59).to_a.sample,
+      (0..59).to_a.sample,
+    ).new_offset(0).to_time.to_i
   end
 
   def self.generate

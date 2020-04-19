@@ -1,16 +1,17 @@
 GIT
   remote: https://github.com/0x000000/team7-domain
-  revision: 92287338a3ce04df92cd6c0e0dd32842300ba9f9
+  revision: d54d2a596669a8678ab9c89acb153df1da02cca8
   branch: master
   glob: build/ruby/*.gemspec
   specs:
-    domain-ruby (0.0.2)
+    domain-ruby (0.0.5)
       google-protobuf (~> 3.11.2)
       grpc (~> 1.27.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
+    concurrent-ruby (1.1.6)
     google-protobuf (3.11.4)
     googleapis-common-protos-types (1.0.5)
       google-protobuf (~> 3.11)
@@ -22,6 +23,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  concurrent-ruby
   domain-ruby!
 
 RUBY VERSION
