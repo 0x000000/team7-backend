@@ -1,15 +1,13 @@
 require_relative '../helpers/data_generator'
-require_relative 'broadcast_service'
 
 class LoansService < Domain::Api::Private::LoansService::Service
-  include BroadcastService
+  POOL_WAIT_SEC = 0.3
 
   attr_reader :loans, :updates, :live_clients
 
   def initialize
     @loans = DataGenerator.generate
     @updates = Concurrent::Map.new
-    @live_clients = Concurrent::Map.new
   end
 
   def load_all(_, _call)
@@ -20,10 +18,29 @@ class LoansService < Domain::Api::Private::LoansService::Service
     updated_loan.updated_at = DataGenerator.current_time
     loans[updated_loan.id] = updated_loan
 
-    update_queue(updated_loan, updates, live_clients)
+    updates.each do |_client_id, client_queue| #send update for each client queue
+      client_queue.push(updated_loan)
+    end
+
+    Google::Protobuf::Empty.new
   end
 
   def listen_to_updates(client, _call)
-    broadcast_updates(client, updates, live_clients)
+    updates[client.id] = []
+
+    Enumerator.new do |enum|
+      while true
+        loop do
+          update = updates[client.id].shift
+          if update
+            enum.yield(update)
+          else
+            break
+          end
+        end
+
+        sleep POOL_WAIT_SEC
+      end
+    end
   end
 end

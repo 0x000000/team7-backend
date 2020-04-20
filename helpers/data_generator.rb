@@ -16,7 +16,7 @@ module DataGenerator
     DateTime.new(
       year,
       months[year].sample,
-      (1..29).to_a.sample,
+      (1..28).to_a.sample,
       (0..23).to_a.sample,
       (0..59).to_a.sample,
       (0..59).to_a.sample,
