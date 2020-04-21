@@ -1,7 +1,7 @@
 require_relative '../helpers/data_generator'
 
 class LoansService < Domain::Api::Private::LoansService::Service
-  POOL_WAIT_SEC = 0.3
+  POOL_WAIT_SEC = 0.1
 
   attr_reader :loans, :updates, :live_clients
 
