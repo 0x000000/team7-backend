@@ -29,17 +29,8 @@ module DataGenerator
       "Estelle Blake",
       "Patrick Long",
       "Dixie Frazier",
-      "Susie Drake",
       "Jerald Fernandez",
       "Robyn Sullivan",
-      "Sherri Campbell",
-      "Tricia Schultz",
-      "Thelma Green",
-      "Olivia Reyes",
-      "Bernice Hardy",
-      "Sidney Berry",
-      "Jessie Rodriguez",
-      "Terence Johnston",
       "Nathan Wood",
     ].map.with_index do |name, idx|
       Domain::User.new(

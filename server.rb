@@ -8,7 +8,7 @@ require 'domain-ruby'
 require_relative 'helpers/logger'
 require_relative 'services/loan_service'
 
-server = GRPC::RpcServer.new
+server = GRPC::RpcServer.new(pool_size: 200, pool_keep_alive: 20)
 server.add_http2_port('0.0.0.0:10369', :this_port_is_insecure)
 
 server.handle(LoansService.new)
