@@ -1,7 +1,7 @@
 ## PeerStreet Hackathon 2020 — Backend
 
 Our main idea was simple: we want to show that it's possible to separate
-domain modal from implementation and maintain this model as the first-class project.
+domain model from implementation and maintain this model as the first-class project.
 We created 3 repos connected:
 
 1. **Domain model** (Protobuf 3 + Rake task to build Ruby gem and Js/Ts package): [0x000000/team7-domain](https://github.com/0x000000/team7-domain)
